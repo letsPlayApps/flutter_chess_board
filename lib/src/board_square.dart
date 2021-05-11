@@ -37,7 +37,7 @@ class BoardSquare extends StatelessWidget {
         }, onAccept: (List moveInfo) async {
           // A way to check if move occurred.
           chess.Color moveColor = model.game.turn;
-
+          String promotionPiece;
           if (moveInfo[1] == "P" &&
               ((moveInfo[0][1] == "7" &&
                       squareName[1] == "8" &&
@@ -45,11 +45,11 @@ class BoardSquare extends StatelessWidget {
                   (moveInfo[0][1] == "2" &&
                       squareName[1] == "1" &&
                       moveInfo[2] == chess.Color.BLACK))) {
-            var val = await _promotionDialog(context);
+            promotionPiece = await _promotionDialog(context);
 
-            if (val != null) {
+            if (promotionPiece != null) {
               model.game.move(
-                  {"from": moveInfo[0], "to": squareName, "promotion": val});
+                  {"from": moveInfo[0], "to": squareName, "promotion": promotionPiece});
             } else {
               return;
             }
@@ -60,6 +60,7 @@ class BoardSquare extends StatelessWidget {
             model.onMove(
               moveInfo[0] == "P" ? squareName : moveInfo[0],
               squareName,
+              promotionPiece
             );
           }
           model.refreshBoard();
