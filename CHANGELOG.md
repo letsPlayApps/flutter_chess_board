@@ -1,7 +1,3 @@
-## [0.9.4] - 06/02/2019.
+## [0.9.7] - 26/04/2021.
 
-* Changed sdk dependencies
-* Added board colors
-* Changed architecture to ScopedModel
-* Fixed controller bug
-* Added screenshots
+* Added makeMove with SAN notation 
