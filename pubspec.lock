@@ -35,14 +35,14 @@ packages:
       name: chess
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.5"
+    version: "0.6.6"
   chess_vectors_flutter:
     dependency: "direct main"
     description:
       name: chess_vectors_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.12"
   clock:
     dependency: transitive
     description:
@@ -108,7 +108,7 @@ packages:
       name: scoped_model
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.1.0"
   sky_engine:
     dependency: transitive
     description: flutter

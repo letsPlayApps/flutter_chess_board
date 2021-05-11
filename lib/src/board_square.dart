@@ -34,7 +34,7 @@ class BoardSquare extends StatelessWidget {
               : Container();
         }, onWillAccept: (willAccept) {
           return model.enableUserMoves ? true : false;
-        }, onAccept: (List moveInfo) {
+        }, onAccept: (List moveInfo) async {
           // A way to check if move occurred.
           chess.Color moveColor = model.game.turn;
 
@@ -45,11 +45,14 @@ class BoardSquare extends StatelessWidget {
                   (moveInfo[0][1] == "2" &&
                       squareName[1] == "1" &&
                       moveInfo[2] == chess.Color.BLACK))) {
-            _promotionDialog(context).then((value) {
+            var val = await _promotionDialog(context);
+
+            if (val != null) {
               model.game.move(
-                  {"from": moveInfo[0], "to": squareName, "promotion": value});
-              model.refreshBoard();
-            });
+                  {"from": moveInfo[0], "to": squareName, "promotion": val});
+            } else {
+              return;
+            }
           } else {
             model.game.move({"from": moveInfo[0], "to": squareName});
           }
@@ -117,13 +120,9 @@ class BoardSquare extends StatelessWidget {
       return Container();
     }
 
-    String piece = model.game
-            .get(squareName)
-            .color
-            .toString()
-            .substring(0, 1)
-            .toUpperCase() +
-        model.game.get(squareName).type.toUpperCase();
+    String piece =
+        (model.game.get(squareName).color == chess.Color.WHITE ? 'W' : 'B') +
+            model.game.get(squareName).type.toUpperCase();
 
     switch (piece) {
       case "WP":
