@@ -4,7 +4,7 @@ import 'package:flutter_chess_board/src/chess_board_controller.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:chess/chess.dart' as chess;
 
-typedef Null MoveCallback(String from, String to, String pieceToPromote);
+typedef Null MoveCallback(String? from, String? to, String? pieceToPromote);
 typedef Null CheckMateCallback(PieceColor color);
 typedef Null CheckCallback(PieceColor color);
 
@@ -28,27 +28,27 @@ class BoardModel extends Model {
   bool whiteSideTowardsUser;
 
   /// The controller for programmatically making moves
-  ChessBoardController chessBoardController;
+  ChessBoardController? chessBoardController;
 
   /// User moves can be enabled or disabled by this property
   bool enableUserMoves;
 
   /// Creates a logical game
-  chess.Chess game;
+  chess.Chess? game;
 
   /// Refreshes board
   void refreshBoard() {
-    if (game.in_checkmate) {
+    if (game!.in_checkmate) {
       onCheckMate(
-          game.turn == chess.Color.WHITE ? PieceColor.White : PieceColor.Black);
-    } else if (game.in_draw ||
-        game.in_stalemate ||
-        game.in_threefold_repetition ||
-        game.insufficient_material) {
+          game!.turn == chess.Color.WHITE ? PieceColor.White : PieceColor.Black);
+    } else if (game!.in_draw ||
+        game!.in_stalemate ||
+        game!.in_threefold_repetition ||
+        game!.insufficient_material) {
       onDraw();
-    } else if (game.in_check) {
+    } else if (game!.in_check) {
       onCheck(
-          game.turn == chess.Color.WHITE ? PieceColor.White : PieceColor.Black);
+          game!.turn == chess.Color.WHITE ? PieceColor.White : PieceColor.Black);
     }
     notifyListeners();
   }
@@ -63,7 +63,7 @@ class BoardModel extends Model {
       this.chessBoardController,
       this.enableUserMoves) {
     if (chessBoardController?.game != null) {
-      game = chessBoardController.game;
+      game = chessBoardController!.game;
     } else {
       game = chess.Chess();
       chessBoardController?.game = game;

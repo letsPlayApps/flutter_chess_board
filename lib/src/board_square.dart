@@ -18,7 +18,7 @@ class BoardSquare extends StatelessWidget {
       return Expanded(
         flex: 1,
         child: DragTarget(builder: (context, accepted, rejected) {
-          return model.game.get(squareName) != null
+          return model.game!.get(squareName) != null
               ? Draggable(
                   child: _getImageToDisplay(size: model.size / 8, model: model),
                   childWhenDragging: Container(),
@@ -27,17 +27,17 @@ class BoardSquare extends StatelessWidget {
                   onDragCompleted: () {},
                   data: [
                     squareName,
-                    model.game.get(squareName).type.toUpperCase(),
-                    model.game.get(squareName).color,
+                    model.game!.get(squareName)!.type.toUpperCase(),
+                    model.game!.get(squareName)!.color,
                   ],
                 )
               : Container();
-        }, onWillAccept: (willAccept) {
+        }, onWillAccept: (dynamic willAccept) {
           return model.enableUserMoves ? true : false;
         }, onAccept: (List moveInfo) async {
           // A way to check if move occurred.
-          chess.Color moveColor = model.game.turn;
-          String promotionPiece;
+          chess.Color moveColor = model.game!.turn;
+          String? promotionPiece;
           if (moveInfo[1] == "P" &&
               ((moveInfo[0][1] == "7" &&
                       squareName[1] == "8" &&
@@ -48,15 +48,15 @@ class BoardSquare extends StatelessWidget {
             promotionPiece = await _promotionDialog(context);
 
             if (promotionPiece != null) {
-              model.game.move(
+              model.game!.move(
                   {"from": moveInfo[0], "to": squareName, "promotion": promotionPiece});
             } else {
               return;
             }
           } else {
-            model.game.move({"from": moveInfo[0], "to": squareName});
+            model.game!.move({"from": moveInfo[0], "to": squareName});
           }
-          if (model.game.turn != moveColor) {
+          if (model.game!.turn != moveColor) {
             model.onMove(
               moveInfo[0] == "P" ? squareName : moveInfo[0],
               squareName,
@@ -109,61 +109,61 @@ class BoardSquare extends StatelessWidget {
         );
       },
     ).then((value) {
-      return value;
+      return value!;
     });
   }
 
   /// Get image to display on square
-  Widget _getImageToDisplay({double size, BoardModel model}) {
+  Widget _getImageToDisplay({double? size, required BoardModel model}) {
     Widget imageToDisplay = Container();
 
-    if (model.game.get(squareName) == null) {
+    if (model.game!.get(squareName) == null) {
       return Container();
     }
 
     String piece =
-        (model.game.get(squareName).color == chess.Color.WHITE ? 'W' : 'B') +
-            model.game.get(squareName).type.toUpperCase();
+        (model.game!.get(squareName)!.color == chess.Color.WHITE ? 'W' : 'B') +
+            model.game!.get(squareName)!.type.toUpperCase();
 
     switch (piece) {
       case "WP":
-        imageToDisplay = WhitePawn(size: size);
+        imageToDisplay = WhitePawn(size: size!);
         break;
       case "WR":
-        imageToDisplay = WhiteRook(size: size);
+        imageToDisplay = WhiteRook(size: size!);
         break;
       case "WN":
-        imageToDisplay = WhiteKnight(size: size);
+        imageToDisplay = WhiteKnight(size: size!);
         break;
       case "WB":
-        imageToDisplay = WhiteBishop(size: size);
+        imageToDisplay = WhiteBishop(size: size!);
         break;
       case "WQ":
-        imageToDisplay = WhiteQueen(size: size);
+        imageToDisplay = WhiteQueen(size: size!);
         break;
       case "WK":
-        imageToDisplay = WhiteKing(size: size);
+        imageToDisplay = WhiteKing(size: size!);
         break;
       case "BP":
-        imageToDisplay = BlackPawn(size: size);
+        imageToDisplay = BlackPawn(size: size!);
         break;
       case "BR":
-        imageToDisplay = BlackRook(size: size);
+        imageToDisplay = BlackRook(size: size!);
         break;
       case "BN":
-        imageToDisplay = BlackKnight(size: size);
+        imageToDisplay = BlackKnight(size: size!);
         break;
       case "BB":
-        imageToDisplay = BlackBishop(size: size);
+        imageToDisplay = BlackBishop(size: size!);
         break;
       case "BQ":
-        imageToDisplay = BlackQueen(size: size);
+        imageToDisplay = BlackQueen(size: size!);
         break;
       case "BK":
-        imageToDisplay = BlackKing(size: size);
+        imageToDisplay = BlackKing(size: size!);
         break;
       default:
-        imageToDisplay = WhitePawn(size: size);
+        imageToDisplay = WhitePawn(size: size!);
     }
 
     return imageToDisplay;

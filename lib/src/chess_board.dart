@@ -116,7 +116,7 @@ class ChessBoard extends StatefulWidget {
   final bool whiteSideTowardsUser;
 
   /// A controller to programmatically control the chess board
-  final ChessBoardController chessBoardController;
+  final ChessBoardController? chessBoardController;
 
   /// A boolean which checks if the user should be allowed to make moves
   final bool enableUserMoves;
@@ -127,10 +127,10 @@ class ChessBoard extends StatefulWidget {
   ChessBoard({
     this.size = 200.0,
     this.whiteSideTowardsUser = true,
-    @required this.onMove,
-    @required this.onCheckMate,
-    @required this.onCheck,
-    @required this.onDraw,
+    required this.onMove,
+    required this.onCheckMate,
+    required this.onCheck,
+    required this.onDraw,
     this.chessBoardController,
     this.enableUserMoves = true,
     this.boardType = BoardType.brown,
@@ -196,7 +196,7 @@ class _ChessBoardState extends State<ChessBoard> {
   }
 
   /// Returns the board image
-  Image _getBoardImage() {
+  Image? _getBoardImage() {
     switch (widget.boardType) {
       case BoardType.brown:
         return Image.asset(

@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 print("move1 $move1 -> $move2");
                 _chessBoardController2.makeMove(move1, move2);
                 canMove2 = true;
-              },
+              } as Null Function(String, String, String),
               onCheck: (color) {
                 print(color);
               },
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 print("move1 $move1 -> $move2");
                 _chessBoardController1.makeMove(move1, move2);
                 canMove1 = true;
-              },
+              } as Null Function(String, String, String),
               onCheck: (color) {
                 print(color);
               },
